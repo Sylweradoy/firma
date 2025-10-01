@@ -1,0 +1,234 @@
+/* src/app/(site)/_components/Navbar/Navbar.module.scss */
+@use "sass:color";
+@use "styles/index" as *;
+
+.navWrap {
+  position: sticky;
+  top: 0;
+  z-index: z(header);
+}
+
+.nav {
+  background: color.change($color-bg, $alpha: 0.55);
+  backdrop-filter: blur(0.7px);
+  border-bottom: 1px solid $color-border;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  padding-block: space(3);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: space(2);
+  text-decoration: none;
+  color: $color-fg;
+}
+.brandLogo { width: 120px; height: 28px; display: block; }
+
+
+/* === BURGER === *//* BEZ tła i bez borderu; większy hit-area */
+.menuButton {
+  appearance: none;
+  border: 0;                 /* ← bez obramowania */
+  background: transparent;   /* ← bez tła */
+  padding: 0;
+  width: 44px;               /* wygodny obszar kliknięcia */
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  cursor: pointer;
+
+  @include mq(md) { display: none; }
+  &:focus-visible { @include focus-ring; outline-offset: 4px; }
+}
+
+/* ikona (3 kreski) jak było */
+.menuIcon {
+  display: inline-block;
+  width: 22px; height: 2px;
+  background: $color-fg;         /* środkowa kreska */
+  position: relative;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.menuIcon::before,
+.menuIcon::after {
+  content: "";
+  position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: $color-fg;
+  transition: transform .2s ease, top .2s ease, background-color .2s ease;
+}
+.menuIcon::before { top: -7px; }
+.menuIcon::after  { top:  7px; }
+
+/* stan OTWARTY → czerwony „X” (bez żadnych borderów/tła na przycisku) */
+.menuButton[data-open="true"] .menuIcon {
+  background: transparent; /* chowamy środkową kreskę */
+}
+.menuButton[data-open="true"] .menuIcon::before {
+  top: 0;
+  transform: rotate(45deg);
+  background: $color-accent; /* czerwony */
+}
+.menuButton[data-open="true"] .menuIcon::after {
+  top: 0;
+  transform: rotate(-45deg);
+  background: $color-accent; /* czerwony */
+}
+
+/* (opcjonalnie) delikatny hover na mobile/desktop */
+.menuButton:hover .menuIcon,
+.menuButton:hover .menuIcon::before,
+.menuButton:hover .menuIcon::after {
+  background: color.change($color-fg, $alpha: .95);
+}
+
+.menuButton {
+  appearance: none;
+  border: 1px solid $color-border;
+  background: color.change($color-bg, $alpha: 0.4);
+  border-radius: radius(md);
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease;
+
+  @include mq(md) { display: none; }
+
+  &:focus-visible { @include focus-ring; }
+}
+
+/* trzy kreski */
+.menuIcon {
+  display: inline-block;
+  width: 22px; height: 2px;
+  background: $color-fg;
+  position: relative;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.menuIcon::before,
+.menuIcon::after {
+  content: "";
+  position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: $color-fg;
+  transition: transform .2s ease, top .2s ease, background-color .2s ease;
+}
+.menuIcon::before { top: -7px; }
+.menuIcon::after  { top:  7px; }
+
+/* stan OTWARTY → „X” i czerwone */
+.menuButton[data-open="true"] {
+  border-color: $color-accent;
+  background: color.change($color-bg, $alpha: 0.2);
+}
+.menuButton[data-open="true"] .menuIcon {
+  background: transparent; /* ukryj środkową kreskę */
+}
+.menuButton[data-open="true"] .menuIcon::before {
+  top: 0;
+  transform: rotate(45deg);
+  background: $color-accent;
+}
+.menuButton[data-open="true"] .menuIcon::after {
+  top: 0;
+  transform: rotate(-45deg);
+  background: $color-accent;
+}
+
+/* === MENU (mobile wyśrodkowane) === */
+.menu {
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  background: color.change($color-bg, $alpha: 0.85);
+  border-bottom: 1px solid $color-border;
+  display: none;
+  flex-direction: column;
+  align-items: center;                 /* ⬅️ wyśrodkowanie */
+  gap: 0;
+  padding: 8px clamp(12px, 3vw, 32px);
+  text-align: center;                  /* ⬅️ linki na środku */
+
+  &[data-open="true"] { display: flex; }
+
+  @include mq(md) {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: space(4);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    text-align: left;
+  }
+}
+
+.item { list-style: none; width: 100%; @include mq(md) { width: auto; } }
+
+/* === LINKI === */
+.link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;                 /* pilnuje zewnętrznego radiusa */
+  display: block;
+  width: 100%;
+  padding: 12px 8px;
+  text-decoration: none;
+  color: $color-fg;
+  opacity: .95;
+  border-radius: radius(sm);        /* zewnętrzne narożniki */
+  $bg-slide-duration: .30s;
+  transition: color $bg-slide-duration ease $bg-slide-duration;
+
+  @include mq(md) { width: auto; padding: 8px 6px; }
+
+  &:hover { color: $color-accent; }
+  &:focus-visible { @include focus-ring; }
+  &:hover, &:focus-visible { opacity: 1; }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 0;
+    background: $white;
+    opacity: .14;
+    z-index: -1;
+    transition: width $bg-slide-duration ease;
+  }
+
+  /* LEWA połówka – tylko zewnętrzne (TL/BL) zaokrąglone */
+  &::before {
+    left: 0;
+    border-top-left-radius:    radius(sm);
+    border-bottom-left-radius: radius(sm);
+    border-top-right-radius:   0;
+    border-bottom-right-radius:0;
+  }
+
+  /* PRAWA połówka – tylko zewnętrzne (TR/BR) zaokrąglone */
+  &::after {
+    right: 0;
+    border-top-right-radius:    radius(sm);
+    border-bottom-right-radius: radius(sm);
+    border-top-left-radius:     0;
+    border-bottom-left-radius:  0;
+  }
+
+  &:hover::before,
+  &:hover::after,
+  &:focus-visible::before,
+  &:focus-visible::after {
+    width: 50%;
+  }
+}

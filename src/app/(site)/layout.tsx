@@ -1,10 +1,19 @@
 // src/app/(site)/layout.tsx
 import type { Metadata, Viewport } from "next";
 import "./styles/site.scss";
+import Navbar from "./components/Navbar/Navbar";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
   : undefined;
+
+  import { Gruppo } from "next/font/google";
+const gruppo = Gruppo({
+  weight: "400",           // Gruppo ma jeden krój
+  subsets: ["latin"],
+  variable: "--font-gruppo",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: baseUrl,
@@ -45,7 +54,8 @@ export default function SiteLayout({
 }) {
   return (
     <html lang="pl">
-      <body>
+      <body className={gruppo.variable}>
+          <Navbar />  
         <main className="siteMain">{children}</main>
       </body>
     </html>
