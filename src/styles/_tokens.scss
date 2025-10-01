@@ -22,9 +22,24 @@ $accent-200: color.scale($red, $lightness: 10%);
 $accent-800: color.scale($red, $lightness: -15%);
 
 // === TYPOGRAFIA ===
-$font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-            Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-            "Noto Color Emoji", sans-serif;
+
+$font-system: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+              Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+              "Noto Color Emoji", sans-serif !default;
+
+// alias (zachowanie kompatybilności, jeśli gdzieś użyłeś $font-sans)
+$font-sans: $font-system !default;
+
+/* Fonty „semantyczne” — zmieniasz TYLKO tutaj */
+$font-body:    $font-system !default;                   // treść
+$font-heading: $font-system !default;                   // nagłówki (na razie system)
+$font-brand:   var(--font-gruppo), $font-system !default; // logo/brand (Gruppo)
+
+/* Wagi (łatwiej potem spiąć spójność) */
+$weight-regular: 400 !default;
+$weight-semibold: 600 !default;
+$weight-bold:     800 !default;
+
 
 // === LAYOUT ===
 $container-w: 1100px;

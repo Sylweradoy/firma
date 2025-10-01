@@ -10,7 +10,7 @@ body {
   @include surface-bg();  /* ciemny bg + kropki + czerwony BL + biały TR */
   background-attachment: scroll; /* ewentualnie: fixed (patrz niżej) */
   color: $color-fg;
-  font-family: $font-sans;
+   font-family: var(--font-gruppo), $font-sans;
   margin: 0;
 }
 
