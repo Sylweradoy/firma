@@ -1,0 +1,39 @@
+// src/styles/_surfaces.scss
+@use "sass:color";
+@use "styles/tokens" as *;
+
+
+
+/// Mixin: ciemne tło + drobne czerwone kropki + 2 czerwone przeźroczyste „glowy”
+/// - bottom-left (lewy dół)
+/// - top-right   (prawy góra)
+@mixin surface-bg(
+  $dots-gap:  $surface-dots-gap,
+  $dots-size: $surface-dots-size,
+  $dots-alpha:$surface-dots-alpha
+) {
+  background-color: $color-bg;
+
+  background-image:
+    radial-gradient(ellipse #{$surface-glow-bl-size} at #{$surface-glow-bl-pos},
+      #{color.change($surface-glow-bl-color, $alpha: $surface-glow-bl-alpha)} 0%,
+      #{color.change($surface-glow-bl-color, $alpha: 0)} #{$surface-glow-bl-stop}),
+    radial-gradient(ellipse #{$surface-glow-tr-size} at #{$surface-glow-tr-pos},
+      #{color.change($surface-glow-tr-color, $alpha: $surface-glow-tr-alpha)} 0%,
+      #{color.change($surface-glow-tr-color, $alpha: 0)} #{$surface-glow-tr-stop}),
+    radial-gradient(
+      circle,
+      #{color.change($surface-dots-color, $alpha: $dots-alpha)} #{$dots-size},
+      transparent #{$dots-size}
+    );
+
+  background-size:
+    auto,
+    auto,
+    #{$dots-gap} #{$dots-gap};
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    repeat;
+}

@@ -1,0 +1,43 @@
+/* src/app/(site)/styles/site.scss */
+@use "styles/index" as *;
+
+:root { color-scheme: dark; }
+
+:root { color-scheme: dark; }
+
+html, body { height: 100%; }
+body {
+  @include surface-bg();  /* ciemny bg + kropki + czerwony BL + biały TR */
+  background-attachment: scroll; /* ewentualnie: fixed (patrz niżej) */
+  color: $color-fg;
+  font-family: $font-sans;
+  margin: 0;
+}
+
+.siteHeader {
+  border-bottom: 1px solid $color-border;
+  background: $color-bg;
+}
+.siteHeader__inner {
+  @include container;
+  padding-block: space(4);
+}
+.siteBrand {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: .2px;
+  @include fluid(font-size, 28px, 40px);
+}
+.siteTagline {
+  margin: 4px 0 0;
+  color: $color-muted;
+  font-size: 14px;
+  @include mq(md) { font-size: 16px; }
+}
+
+.siteMain {
+  /* pełna szerokość — hero będzie „full-bleed” */
+  padding-block: space(6);
+}
+
+

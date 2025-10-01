@@ -1,0 +1,108 @@
+// src/styles/_tokens.scss
+@use "sass:color";
+
+// === PALETA BAZOWA ===
+$white: #ffffff;
+$black: #000000;
+
+$red:   #e32727;   // akcent/brand
+$bg:    #2c2c2c;   // tło
+$text:  #f3f3f3;   // tekst główny
+$muted: #b8b8b8;   // tekst wtórny
+
+// === KOLORY SEMANTYCZNE (używaj tych w UI) ===
+$color-bg:     $bg;
+$color-fg:     $text;
+$color-muted:  $muted;
+$color-accent: $red;
+$color-border: rgba(#fff, .12);
+
+// delikatne odcienie akcentu (opcjonalne)
+$accent-200: color.scale($red, $lightness: 10%);
+$accent-800: color.scale($red, $lightness: -15%);
+
+// === TYPOGRAFIA ===
+$font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+            Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+            "Noto Color Emoji", sans-serif;
+
+// === LAYOUT ===
+$container-w: 1100px;
+
+// === BREAKPOINTY ===
+$breakpoints: (
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);
+
+// === SPACING (skala odstępów) ===
+$space: (
+  0: 0,
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 24px,
+  6: 32px,
+  7: 48px,
+  8: 64px
+);
+
+// === RADIUS ===
+$radii: (
+  sm: 6px,
+  md: 12px,
+  lg: 16px,
+  xl: 24px,
+  pill: 999px
+);
+
+// === SHADOWS (lekki/przyc.) ===
+$shadows: (
+  sm: 0 1px 2px rgba(0,0,0,.15),
+  md: 0 4px 14px rgba(0,0,0,.22),
+  lg: 0 12px 32px rgba(0,0,0,.28)
+);
+
+// === Z-INDEX WARSTWY ===
+$z: (
+  base: 0,
+  header: 10,
+  overlay: 100,
+  modal: 1000,
+  toast: 1100
+);
+// === SURFACES (tokeny do tła) ===
+$surface-dots-color:  $color-accent !default; // czerwone kropki
+$surface-dots-gap:    16px !default;
+$surface-dots-size:   1.5px !default;
+$surface-dots-alpha:  0.70 !default;
+
+$surface-glow-bl-color: $color-accent !default; // lewy-dół: czerwony
+$surface-glow-tr-color: $white !default;        // prawy-góra: biały
+
+// siła (przezroczystość) „glow”
+$surface-glow-bl-alpha: 0.10 !default; // mocniejsze, żeby było „większe”
+$surface-glow-tr-alpha: 0.15 !default;
+
+// rozmiar elipsy glow (większe = większy zasięg)
+$surface-glow-bl-size:  100% 100% !default;
+$surface-glow-tr-size:  100% 100% !default;
+
+// pozycje i „zasięg” zanikania
+$surface-glow-bl-pos:   0% 100% !default;  // lewy-dół
+$surface-glow-tr-pos:   100% 0% !default;  // prawy-góra
+$surface-glow-bl-stop:  78% !default;
+$surface-glow-tr-stop:  72% !default;
+
+
+// (OPCJONALNIE) CSS variables — przydatne poza SCSS Modules
+:root {
+  --color-bg:     #{$color-bg};
+  --color-fg:     #{$color-fg};
+  --color-muted:  #{$color-muted};
+  --color-accent: #{$color-accent};
+  --color-border: #{$color-border};
+}
