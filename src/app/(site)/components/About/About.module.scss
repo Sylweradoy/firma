@@ -1,0 +1,154 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.about {
+  @include container;
+  padding-block: clamp(40px, 8vw, 110px);
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.header {
+  text-align: center;
+  display: grid;
+  gap: space(2);
+}
+
+.overline {
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: $color-muted;
+  margin: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  line-height: 1.04;
+  font-size: clamp(28px, 6.8vw, 58px);
+
+  span {
+    color: $color-accent;
+    text-shadow: 0 0 22px color.change($color-accent, $alpha: .35);
+  }
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 80ch;
+  opacity: .92;
+  font-size: clamp(15px, 2.1vw, 18px);
+}
+
+.grid {
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: clamp(14px, 3.2vw, 24px);
+
+  justify-items: center;
+  justify-content: center;
+
+  @include mq(md) {
+    --cols: 2;
+    justify-items: stretch;
+    justify-content: stretch;
+  }
+}
+
+.card {
+  width: min(92vw, 560px);
+  justify-self: center;
+  margin-inline: auto;
+
+  @include card;
+  background: color.change($white, $alpha: .04);
+  border-color: $color-border;
+  padding: clamp(16px, 3vw, 22px);
+  display: grid;
+  gap: space(2);
+  transition: transform .18s ease, border-color .2s ease, background-color .2s ease;
+
+  @include mq(md) {
+    width: auto;
+    margin-inline: 0;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    background: color.change($white, $alpha: .06);
+    border-color: color.change($color-accent, $alpha: .7);
+  }
+}
+
+.icon {
+  width: 44px; height: 44px;
+  border-radius: radius(lg);
+  display: grid; place-items: center;
+  color: $color-accent;
+  background: color.change($white, $alpha: .06);
+  border: 1px solid $color-border;
+}
+
+.cardTitle {
+  margin: 4px 0 0;
+  font-weight: $weight-bold;
+  font-size: clamp(18px, 2.8vw, 22px);
+}
+
+.cardDesc {
+  margin: 0;
+  color: $color-fg;
+  opacity: .9;
+  font-size: clamp(14px, 2.2vw, 16px);
+}
+
+.badges {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 2px 0 0; padding: 0; list-style: none;
+}
+.badge {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: radius(pill);
+  background: color.change($white, $alpha: .06);
+  border: 1px solid $color-border;
+  color: $color-fg;
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.6vw, 14px);
+  flex-wrap: wrap;
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: $color-border;
+}
+.pill, .pillAccent {
+  padding: 8px 12px;
+  border-radius: radius(pill);
+  border: 1px solid $color-border;
+  background: color.change($white, $alpha: .05);
+  font-size: 14px;
+}
+.pillAccent {
+  border-color: color.change($color-accent, $alpha: .8);
+  background: color.change($white, $alpha: .08);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0; /* odstępy robi .base + .base z modułu przycisków */
+}
+
+.name {
+  color: $color-accent;        /* czerwony z tokenów */
+  font-weight: $weight-bold;   /* możesz usunąć, jeśli wolisz normal */
+}
