@@ -70,7 +70,7 @@
   max-width: 560px;           /* sufit szerokości */
   justify-self: center;       /* wymuś środek w komórce */
   margin-inline: auto; 
-  left: -5.5%;  
+  left: -6.5%;
   /* zapas, gdyby coś nadpisało justify-self */
 
   @include card;
