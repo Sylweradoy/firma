@@ -2,14 +2,15 @@
 import type { Metadata, Viewport } from "next";
 import "./styles/site.scss";
 import Navbar from "./components/Navbar/Navbar";
+import ScrollTop from "./components/ScrollTop/ScrollTop";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
   : undefined;
 
-  import { Gruppo } from "next/font/google";
+import { Gruppo } from "next/font/google";
 const gruppo = Gruppo({
-  weight: "400",           // Gruppo ma jeden krój
+  weight: "400", // Gruppo ma jeden krój
   subsets: ["latin"],
   variable: "--font-gruppo",
   display: "swap",
@@ -45,8 +46,6 @@ export function generateViewport(): Viewport {
   return { themeColor: "#2c2c2c" };
 }
 
-
-
 export default function SiteLayout({
   children,
 }: {
@@ -55,8 +54,9 @@ export default function SiteLayout({
   return (
     <html lang="pl">
       <body className={gruppo.variable}>
-          <Navbar />  
+        <Navbar />
         <main className="siteMain">{children}</main>
+        <ScrollTop />
       </body>
     </html>
   );

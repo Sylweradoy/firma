@@ -1,0 +1,47 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+/* Floating Action Button (prawy-dolny róg) */
+.fab {
+  position: fixed;
+  right: clamp(12px, 2vw, 22px);
+  bottom: clamp(12px, 2vw, 22px);
+  z-index: 999; /* nad contentem, pod nav jeśli nav ma wyższy z-index */
+
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+
+  /* styl spójny z Twoim UI: border odsunięty i zjeżdża na hover */
+  --offset-x: -6px;
+  --offset-y:  6px;
+
+  background: $white;             /* biały */
+  color: $color-accent;           /* czerwona ikona */
+  border: 0;
+  border-radius: radius(md);
+  cursor: pointer;
+  isolation: isolate;
+  transition: background-color .15s ease, color .15s ease, transform .12s ease;
+
+  /* „odsunięty” border */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid $color-accent;
+    border-radius: inherit;
+    transform: translate(var(--offset-x), var(--offset-y));
+    transition: transform .18s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    background: $white;           /* kolory zostają – zmienia się obrys/offset */
+    color: $color-accent;
+  }
+  &:hover::after { transform: translate(0, 0); } /* border zjeżdża do krawędzi */
+  &:active { transform: translate(-1px, 1px); }
+  &:focus-visible { @include focus-ring; }
+}

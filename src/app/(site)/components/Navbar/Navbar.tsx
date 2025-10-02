@@ -7,9 +7,8 @@ import { useState } from "react";
 import styles from "./Navbar.module.scss";
 
 const items = [
-  { href: "#hero", label: "USŁUGI" },
-  { href: "#o-nas", label: "O NAS" },
   { href: "#services", label: "USŁUGI" },
+  { href: "#o-nas", label: "O NAS" },
   { href: "#proces", label: "PROCES" },
   { href: "#galeria", label: "GALERIA" },
   { href: "#opinion", label: "OPINIE" },
