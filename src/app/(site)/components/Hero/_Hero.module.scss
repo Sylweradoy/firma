@@ -1,0 +1,134 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.hero {
+  height: 100svh;            /* nowoczesny viewport */
+  min-height: 100dvh;        /* fallback/bezpiecznik */
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;          /* nic nie wystaje */
+  /* padding wliczony w height dzięki globalnemu box-sizing */
+  padding-top: var(--nav-h); /* nav overlay – odstęp wizualny, ale nie zwiększa strony */
+  padding-bottom: 24px;
+}
+
+
+
+.inner {
+  @include container;
+  display: grid;
+  gap: space(5);
+  text-align: left;
+}
+
+.overline {
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: $color-muted;
+  margin: 0;
+}
+
+.title {
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  line-height: 1.04;
+  margin: 0;
+  /* większe na desktopie, sensowne zejście na mobile */
+  font-size: clamp(36px, 8.5vw, 92px);
+  .accent {
+    color: $color-accent;
+    text-shadow: 0 0 26px color.change($color-accent, $alpha: .45);
+  }
+}
+.subtitle {
+  max-width: 72ch;
+  opacity: .95;
+  font-size: clamp(16px, 2.4vw, 24px);
+}
+.overline {
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: $color-muted;
+  margin: 0;
+}
+.btnPrimary,
+.btnGhost {
+  padding: clamp(10px, 1.6vw, 14px) clamp(16px, 2.4vw, 24px);
+  font-size: clamp(14px, 1.6vw, 16px);
+  border-radius: radius(xl);
+}
+
+
+
+
+/* OVERLAY z wielkim, rozsuwającym się wyrazem */
+.highlight {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  display: grid; place-items: center;
+  z-index: 3; /* nad treścią hero */
+  overflow: hidden;
+}
+
+.word {
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  /* duże, ale responsywne */
+  font-size: clamp(28px, 10vw, 120px);
+  line-height: .95;
+  color: $white;
+  opacity: .16;
+  text-align: center;
+  white-space: nowrap;
+  /* delikatny glow + ładne mieszanie na ciemnym */
+  text-shadow: 0 0 30px color.change($white, $alpha: .35);
+  mix-blend-mode: screen;
+}
+
+/* chipy „latające” bokami (wciąż aktywne) */
+.floating {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden; /* dla pewności, żeby nic nie wyjechało */
+}
+
+.chip {
+  position: absolute;          /* pozycję (top + left/right) podajemy inline w TSX */
+  font-size: 12px;
+  padding: 6px 10px;
+  color: $color-fg;
+  background: rgba(255,255,255,.07);
+  border: 1px solid $color-border;
+  border-radius: radius(pill);
+  white-space: nowrap;
+  will-change: transform;      /* płynniejsze animacje */
+}
+@keyframes float {
+  0%   { transform: translateY(0) translateX(0); }
+  50%  { transform: translateY(-10px) translateX(6px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* scroll hint */
+.scrollHint {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  width: 24px; height: 36px; border: 2px solid $white; opacity: .6; border-radius: 14px;
+  display: grid; place-items: center; text-decoration: none;
+  transition: opacity .2s ease;
+  &:hover { opacity: .9; }
+  span {
+    width: 3px; height: 8px; background: $white; border-radius: 2px;
+    animation: wheel 1.8s ease-in-out infinite;
+  }
+}
+@keyframes wheel {
+  0%, 20%   { transform: translateY(-6px); opacity: .8; }
+  50%       { transform: translateY(2px);  opacity: 1; }
+  100%      { transform: translateY(-6px); opacity: .8; }
+}

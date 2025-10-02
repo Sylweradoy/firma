@@ -4,8 +4,17 @@
 :root { color-scheme: dark; }
 
 :root { color-scheme: dark; }
+:root {
+  --nav-h: 72px;
+}
 
-html, body { height: 100%; }
+@media (max-width: 767px) { :root { --nav-h: 64px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+
+ html, body { margin: 0; padding: 0; }
+body { margin: 0; }
 body {
   @include surface-bg();  /* ciemny bg + kropki + czerwony BL + biały TR */
   background-attachment: scroll; /* ewentualnie: fixed (patrz niżej) */
@@ -37,7 +46,10 @@ body {
 
 .siteMain {
   /* pełna szerokość — hero będzie „full-bleed” */
-  padding-block: space(6);
+padding: 0;
 }
 
 
+@media (min-width: 768px) {
+  :root { --nav-h: 72px; }
+}
