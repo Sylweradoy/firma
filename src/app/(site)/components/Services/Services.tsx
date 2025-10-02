@@ -77,7 +77,7 @@ const item: Variants = {
 
 export default function Services() {
   return (
-    <section id="uslugi" className={styles.services} aria-labelledby="uslugi-heading">
+    <section id="services" className={styles.services} aria-labelledby="uslugi-heading">
       <motion.div
         className={styles.header}
         initial={{ opacity: 0, y: 12 }}

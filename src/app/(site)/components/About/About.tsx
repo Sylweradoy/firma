@@ -54,7 +54,7 @@ function IconCabinet() {
 export default function About() {
   return (
     <section
-      id="o-nas"
+      id="about"
       className={styles.about}
       aria-labelledby="about-heading"
     >
