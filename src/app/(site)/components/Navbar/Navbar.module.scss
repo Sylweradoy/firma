@@ -3,8 +3,8 @@
 @use "styles/index" as *;
 
 .navWrap {
-  position: sticky;
-  top: 0;
+ position: fixed;   /* było sticky */
+  top: 0; left: 0; right: 0;
   z-index: z(header);
 }
 
@@ -12,17 +12,18 @@
   background: color.change($color-bg, $alpha: 0.55);
   backdrop-filter: blur(0.7px);
   border-bottom: 1px solid $color-border;
+   margin: 0;
 }
 
 .inner {
   @include container;
+  min-height: var(--nav-h);  /* zamiast padding-block */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: space(3);
-  padding-block: space(3);
+ padding: 0;           /* usuwamy, żeby nie „pompować” wysokości */
 }
-
 .brand {
   display: inline-flex;
   align-items: center;

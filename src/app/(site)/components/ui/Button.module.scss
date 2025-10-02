@@ -1,0 +1,75 @@
+@use "styles/index" as *;
+
+/* wspólna baza */
+.base {
+  --offset-x: -6px;   /* w lewo  */
+  --offset-y:  6px;   /* w dół   */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: clamp(10px, 1.6vw, 14px) clamp(16px, 2.4vw, 24px);
+  font-family: $font-body;
+  font-weight: $weight-semibold;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  border: 0;                    /* właściwy border rysujemy pseudo-elementem */
+  background: transparent;      /* tło ustawiają warianty */
+  color: inherit;
+  isolation: isolate;           /* aby :after był pod tekstem */
+  transition: background-color .15s ease, color .15s ease;
+  will-change: transform;
+
+  &:focus-visible { @include focus-ring; }
+}
+
+/* zewnętrzny obrys (border) jako „kartka” przesunięta w lewo/dół */
+.base::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--btn-border, $color-accent);
+  border-radius: inherit;
+  transform: translate(var(--offset-x), var(--offset-y));
+  transition: transform .18s ease, border-color .15s ease, opacity .15s ease;
+  z-index: -1;                  /* pod treścią przy isolation: isolate */
+}
+
+.base + .base {
+  margin-left: clamp(14px, 2.8vw, 32px);
+}
+/* PRIMARY – czerwone tło, biały napis, małe zaokrąglenie */
+.primary {
+  --btn-border: #{$white};
+  border-radius: radius(sm);
+  background: $color-accent;
+  color: $white;
+
+       /* napis czerwony */
+  
+
+  /* na hover border „schodzi się” do krawędzi */
+  &:hover::after { transform: translate(0, 0); }
+}
+
+/* SECONDARY – białe tło, czerwony napis, większe zaokrąglenie */
+.secondary {
+  --btn-border: #{$color-accent};
+  border-radius: radius(sm);
+  background: $white;
+  color: $color-accent;
+
+  /* na hover ta sama animacja: border się zsuwa */
+  &:hover::after { transform: translate(0, 0); }
+}
+
+.disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
