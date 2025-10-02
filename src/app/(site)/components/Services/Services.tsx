@@ -1,14 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants, type Transition } from "framer-motion";
+import type { ReactNode } from "react";
 import styles from "./Services.module.scss";
+// Zostawiam Twoje ścieżki importów przycisków:
 import ButtonPrimary from "@/app/(site)/components/ui/ButtonPrimary";
 import ButtonSecondary from "@/app/(site)/components/ui/ButtonSecondary";
 
 type Service = {
   title: string;
   desc: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 };
 
 const IconPaint = () => (
@@ -46,22 +48,43 @@ const SERVICES: Service[] = [
   { title: "Elektryka – drobne prace", desc: "Przesunięcia punktów, osprzęt, oświetlenie.", icon: <IconElectric/> },
 ];
 
-const container = {
+// bezpieczny easing (cubic-bezier zamiast stringa)
+const easeOut: Transition["ease"] = [0.2, 0.8, 0.2, 1];
+
+const container: Variants = {
   hidden: { opacity: 0, y: 10 },
   show: {
-    opacity: 1, y: 0,
-    transition: { duration: 0.5, ease: "easeOut", when: "beforeChildren", staggerChildren: 0.08 }
-  }
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: easeOut,
+      when: "beforeChildren",
+      staggerChildren: 0.08,
+    },
+  },
 };
-const item = {
+
+const item: Variants = {
   hidden: { opacity: 0, y: 24, scale: 0.98 },
-  show:   { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.45, ease: "easeOut" } }
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: easeOut },
+  },
 };
 
 export default function Services() {
   return (
     <section id="uslugi" className={styles.services} aria-labelledby="uslugi-heading">
-      <motion.div className={styles.header} initial={{opacity:0,y:12}} whileInView={{opacity:1,y:0}} viewport={{ once: true, amount: 0.5 }} transition={{duration:.5}}>
+      <motion.div
+        className={styles.header}
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.5, ease: easeOut }}
+      >
         <p className={styles.overline}>Czym się zajmujemy</p>
         <h2 id="uslugi-heading" className={styles.title}>Usługi <span>Jel-Tomix</span></h2>
         <p className={styles.lead}>
@@ -76,7 +99,7 @@ export default function Services() {
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
       >
-        {SERVICES.map((s, i) => (
+        {SERVICES.map((s) => (
           <motion.li key={s.title} className={styles.card} variants={item}>
             <div className={styles.icon}>{s.icon}</div>
             <h3 className={styles.cardTitle}>{s.title}</h3>
@@ -87,10 +110,10 @@ export default function Services() {
 
       <motion.div
         className={styles.actions}
-        initial={{opacity:0,y:12}}
-        whileInView={{opacity:1,y:0}}
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{duration:.45}}
+        transition={{ duration: 0.45, ease: easeOut }}
       >
         <ButtonPrimary href="#kontakt">Bezpłatna wycena</ButtonPrimary>
         <ButtonSecondary href="#galeria">Zobacz realizacje</ButtonSecondary>
