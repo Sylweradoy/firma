@@ -41,7 +41,7 @@
     background: $white;           /* kolory zostają – zmienia się obrys/offset */
     color: $color-accent;
   }
-  &:hover::after { transform: translate(0, 0); } /* border zjeżdża do krawędzi */
+  &:hover::after { transform: translate(0, 0); } /* border zjeżdża do krawędzi*/
   &:active { transform: translate(-1px, 1px); }
   &:focus-visible { @include focus-ring; }
 }
