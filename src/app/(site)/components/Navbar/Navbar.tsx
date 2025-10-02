@@ -8,7 +8,7 @@ import styles from "./Navbar.module.scss";
 
 const items = [
   { href: "#services", label: "USŁUGI" },
-  { href: "#o-nas", label: "O NAS" },
+  { href: "#about", label: "O NAS" },
   { href: "#proces", label: "PROCES" },
   { href: "#galeria", label: "GALERIA" },
   { href: "#opinion", label: "OPINIE" },
@@ -36,14 +36,13 @@ export default function Navbar() {
               priority
               className={styles.brandLogo}
             />
-           
           </Link>
 
           <button
             className={styles.menuButton}
             aria-label="Menu"
             aria-expanded={open}
-            data-open={open ? "true" : "false"}        // ⬅️ DODANE
+            data-open={open ? "true" : "false"} // ⬅️ DODANE
             onClick={() => setOpen((v) => !v)}
           >
             <span className={styles.menuIcon} />
