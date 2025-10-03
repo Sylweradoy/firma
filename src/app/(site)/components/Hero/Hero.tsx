@@ -164,7 +164,7 @@ export default function Hero() {
       </motion.div>
 
       <a
-        href="#uslugi"
+        href="#services"
         className={styles.scrollHint}
         aria-label="Przewiń do sekcji Usługi"
       >
