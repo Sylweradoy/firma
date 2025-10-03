@@ -1,0 +1,290 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.gallery {
+  @include container;
+  padding-block: clamp(40px, 8vw, 110px);
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.header {
+  text-align: center;
+  display: grid;
+  gap: space(2);
+}
+.overline {
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $color-muted;
+  margin: 0;
+}
+.title {
+  margin: 0;
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  line-height: 1.04;
+  font-size: clamp(28px, 6.5vw, 56px);
+}
+.lead {
+  margin: 0 auto;
+  max-width: 78ch;
+  opacity: 0.92;
+  font-size: clamp(15px, 2.1vw, 18px);
+}
+
+/* Filtry */
+.filters {
+  margin-top: space(2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.filter,
+.filterActive {
+  --offx: -6px;
+  --offy: 6px;
+  padding: 8px 12px;
+  border-radius: radius(pill);
+  border: 0;
+  position: relative;
+  background: color.change($white, $alpha: 0.04);
+  color: $color-fg;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid $color-border;
+    border-radius: inherit;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform 0.18s ease, border-color 0.2s ease;
+  }
+  &:hover::after {
+    transform: translate(0, 0);
+  }
+}
+.filterActive {
+  background: color.change($color-accent, $alpha: 0.14);
+  color: $color-fg;
+  &::after {
+    border-color: color.change($color-accent, $alpha: 0.8);
+  }
+}
+
+/* GRID */
+.grid {
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: clamp(10px, 2.8vw, 16px);
+
+  @include mq(sm) {
+    --cols: 2;
+  }
+  @include mq(md) {
+    --cols: 3;
+  }
+  @include mq(lg) {
+    --cols: 4;
+  }
+}
+
+/* KARTA */
+.card {
+  display: grid;
+  gap: 8px;
+}
+
+.media {
+  position: relative;
+  all: unset;
+  display: block;
+  position: relative;
+  border-radius: radius(xl);
+  overflow: hidden;
+  background: color.change($white, $alpha: 0.04);
+  border: 1px solid $color-border;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  cursor: zoom-in;
+  left: -5.5%;
+
+  /* proporcje obrazu */
+  aspect-ratio: var(--ar, 4 / 3);
+
+  /* efekt hover */
+  transition: transform 0.18s ease, border-color 0.2s ease,
+    background-color 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    background: color.change($white, $alpha: 0.06);
+    border-color: color.change($color-accent, $alpha: 0.7);
+    box-shadow: 0 12px 26px color.change($color-accent, $alpha: 0.08);
+  }
+
+  img,
+  .devPlaceholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+/* ładny dev placeholder */
+.devPlaceholder {
+  display: grid;
+  place-items: center;
+  font-family: $font-brand;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color.change($white, $alpha: 0.7);
+  background: radial-gradient(
+      circle at 20% 30%,
+      color.change($color-accent, $alpha: 0.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      color.change($white, $alpha: 0.06),
+      transparent 40%
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      color.change($white, $alpha: 0.05) 0 2px,
+      transparent 2px 6px
+    ),
+    color.change($white, $alpha: 0.03);
+  border: 1px dashed color.change($white, $alpha: 0.2);
+}
+
+.meta {
+  display: grid;
+  gap: 4px;
+}
+.tags {
+  font-size: 12px;
+  color: $color-muted;
+}
+.cardTitle {
+  margin: 0;
+  font-weight: $weight-bold;
+  font-size: clamp(16px, 2.6vw, 18px);
+}
+.cardDesc {
+  margin: 0;
+  color: $color-fg;
+  opacity: 0.9;
+}
+
+/* Pokaż więcej */
+.moreWrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+}
+.lbBackdrop {
+  position: absolute;
+  inset: 0;
+  background: color.change(#000, $alpha: 0.64);
+  backdrop-filter: blur(2px);
+}
+.lbInner {
+  position: relative;
+  width: min(92vw, 1080px);
+  height: min(80vh, 800px);
+  border-radius: radius(xl);
+  background: color.change($white, $alpha: 0.04);
+  border: 1px solid $color-border;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+}
+.lbClose {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: radius(md);
+  border: 1px solid $color-border;
+  background: color.change($white, $alpha: 0.06);
+  color: $color-fg;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+.lbPrev,
+.lbNext {
+  width: 44px;
+  height: 44px;
+  margin: auto 8px;
+  border: 1px solid $color-border;
+  background: color.change($white, $alpha: 0.06);
+  color: $color-fg;
+  border-radius: radius(lg);
+  cursor: pointer;
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+.lbPrev {
+  grid-column: 1;
+  grid-row: 2;
+}
+.lbNext {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.lbFigure {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  display: grid;
+  background: #000;
+}
+.lbFigure img,
+.lbDev {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.lbDev {
+  display: grid;
+  place-items: center;
+  color: color.change($white, $alpha: 0.8);
+  background: linear-gradient(
+      45deg,
+      color.change($color-accent, $alpha: 0.15),
+      transparent 60%
+    ),
+    #111;
+}
+.lbCaption {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  font-size: 14px;
+  padding: 10px 12px;
+  text-align: center;
+  color: $color-muted;
+  background: color.change($white, $alpha: 0.04);
+  border-top: 1px solid $color-border;
+}
