@@ -1,5 +1,5 @@
 @use "sass:color";
-@use "styles/index" as *;
+@use "styles/index" as *; 
 
 .about {
   @include container;

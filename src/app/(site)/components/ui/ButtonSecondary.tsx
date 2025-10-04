@@ -1,32 +1,57 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import styles from "./Button.module.scss";
+import styles from "./ButtonSecondary.module.scss";
 
-type Props = {
-  children: React.ReactNode;
-  href?: string;
-  className?: string;
-  disabled?: boolean;
+type ButtonVariant = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  href?: undefined;
   ariaLabel?: string;
-  onClick?: () => void;
 };
 
-export default function ButtonSecondary({ children, href, className, disabled, ariaLabel, onClick }: Props) {
-  const classes = clsx(styles.base, styles.secondary, disabled && styles.disabled, className);
+type AnchorVariant = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+  href: string;
+  ariaLabel?: string;
+};
 
-  if (href && !disabled) {
+type Props = ButtonVariant | AnchorVariant;
+
+const ButtonSecondary = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>(
+  function ButtonSecondary(props, ref) {
+    const { children, className, ariaLabel } = props as Props;
+    const classes = clsx(styles.base, styles.secondary, className);
+
+    // Link
+    if ("href" in props && typeof props.href === "string" && !(props as any).disabled) {
+      const { href, ...rest } = props as AnchorVariant;
+      return (
+        <Link
+          href={href}
+          {...rest}
+          className={classes}
+          aria-label={ariaLabel}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+        >
+          {children}
+        </Link>
+      );
+    }
+
+    // Button
+    const { href: _href, type = "button", ...restBtn } = props as ButtonVariant;
     return (
-      <Link href={href} className={classes} aria-label={ariaLabel}>
+      <button
+        {...restBtn}
+        type={type}
+        className={classes}
+        aria-label={ariaLabel}
+        ref={ref as React.Ref<HTMLButtonElement>}
+      >
         {children}
-      </Link>
+      </button>
     );
   }
+);
 
-  return (
-    <button type="button" className={classes} disabled={disabled} aria-label={ariaLabel} onClick={onClick}>
-      {children}
-    </button>
-  );
-}
+export default ButtonSecondary;

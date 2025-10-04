@@ -1,0 +1,228 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.contact {
+  @include container;
+  padding-block: clamp(40px, 8vw, 110px);
+  display: grid;
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.header { text-align: center; display: grid; gap: space(2); }
+.overline {
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: $color-muted;
+  margin: 0;
+}
+.title {
+  margin: 0;
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  line-height: 1.04;
+  font-size: clamp(28px, 6.2vw, 54px);
+
+  span {
+    color: $color-accent;
+    text-shadow: 0 0 18px color.change($color-accent, $alpha: .35);
+  }
+}
+.lead {
+  margin: 0 auto; max-width: 72ch; opacity: .92;
+  font-size: clamp(15px, 2.1vw, 18px);
+}
+
+/* Kafelki kontaktowe */
+.cards {
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: clamp(12px, 3vw, 18px);
+
+  @include mq(sm) { --cols: 2; }
+  @include mq(md) { --cols: 4; }
+}
+.card {
+  @include card;
+  display: grid;
+  gap: 8px;
+  padding: clamp(12px, 2.6vw, 16px);
+  background: color.change($white, $alpha: .05);
+  border-color: $color-border;
+  transition: transform .18s ease, border-color .2s ease, background-color .2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: color.change($white, $alpha: .07);
+    border-color: color.change($color-accent, $alpha: .7);
+  }
+}
+.cardLink {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 4px 10px;
+  text-decoration: none;
+  color: inherit;
+}
+.icon {
+  grid-row: span 2;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: 1px solid $color-border;
+  border-radius: radius(lg);
+  background: color.change($white, $alpha: .06);
+  color: $color-accent;
+}
+.cardTitle {
+  font-size: 12px; color: $color-muted;
+}
+.cardValue {
+  font-size: clamp(14px, 2.2vw, 16px);
+  font-weight: $weight-bold;
+}
+
+/* Info nad formularzem */
+.info {
+  @include note;
+  text-align: center;
+  display: grid; gap: 10px;
+}
+.rulesBtn {
+  --offx: -6px; --offy: 6px;
+  padding: 8px 12px;
+  border-radius: radius(pill);
+  border: 0;
+  background: color.change($white, $alpha: .06);
+  color: $color-fg;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: ""; position: absolute; inset: 0;
+    border: 1px solid $color-border; border-radius: inherit;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform .18s ease, border-color .2s ease;
+  }
+  &:hover::after { transform: translate(0,0); border-color: color.change($color-accent, $alpha: .7); }
+}
+
+
+.form {
+  /* twoje dotychczasowe reguły siatki */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(12px, 2.6vw, 18px);
+
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  /* ← przeniesione z root */
+  label {
+    font-size: 12px;
+    color: $color-muted;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border-radius: radius(lg);
+    border: 1px solid $color-border;
+    background: color.change($white, $alpha: .04);
+    color: $color-fg;
+    padding: 10px 12px;
+    font: inherit;
+
+    /* jeśli nie masz mixina focus-ring, daj zwykły outline: */
+    &:focus {
+      outline: 2px solid color.change($color-accent, $alpha: .6);
+      outline-offset: 2px;
+    }
+
+    &::placeholder { color: color.change($color-fg, $alpha: .5); }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+/* te klasy mogą zostać na root – są lokalne */
+.field, .fieldFull { display: grid; gap: 6px; }
+.fieldFull { grid-column: 1 / -1; }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  /* tylko układ na bardzo wąskich ekranach – bez zmiany paddingu/size! */
+  @media (max-width: 420px) {
+    a, button {
+      flex: 1 1 calc(50% - 8px);
+      min-width: 0;
+      max-width: none;
+    }
+  }
+}
+.sentNote {
+   flex-basis: 100%;
+  text-align: center;
+  margin-top: 4px;
+  font-size: 13px;
+  color: $white;            /* ⬅️ biały */
+
+}
+
+/* Modal – zasady wyceny */
+.modal {
+  position: fixed; inset: 0; z-index: 70;
+  display: grid; place-items: center;
+}
+.backdrop {
+  position: absolute; inset: 0;
+  background: color.change(#000, $alpha: .8);
+  backdrop-filter: blur(2px);
+  border: 0; padding: 0; margin: 0;
+}
+.modalInner {
+  position: relative;
+  width: min(92vw, 720px);
+  border-radius: radius(xl);
+  background: color.change($color-accent, $alpha: .7);
+  border: 1px solid $color-border;
+  box-shadow: 0 24px 64px color.change($color-accent, $alpha: .12);
+  padding: clamp(16px, 3vw, 22px);
+  display: grid; gap: 12px;
+
+}
+.rulesList {
+  margin: 0; padding-left: 18px;
+  li { margin: 6px 0; }
+}
+.modalActions {
+  display: flex; justify-content: end;
+}
+.closeBtn {
+  --offx: -6px; --offy: 6px;
+  padding: 8px 12px;
+  border-radius: radius(md);
+  border: 0; cursor: pointer;
+  color: $color-fg;
+  background: $white;
+  position: relative;
+
+  &::after {
+    content: ""; position: absolute; inset: 0;
+    border: 1px solid $color-accent; border-radius: inherit;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform .18s ease;
+  }
+  &:hover::after { transform: translate(0,0); }
+}

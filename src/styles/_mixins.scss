@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "sass:map";
 @use "sass:math";
 @use "styles/tokens" as *;
@@ -7,6 +8,13 @@
 @function z($name) { @return map.get($z, $name); }
 @function radius($name) { @return map.get($radii, $name); }
 @function shadow($name) { @return map.get($shadows, $name); }
+
+@mixin container {
+  /* uniwersalny, responsywny kontener */
+  --gutter: clamp(16px, 4vw, 40px);
+  width: min(1200px, 100% - var(--gutter));
+  margin-inline: auto;
+}
 
 // ===== MEDIA QUERIES =====
 // ↑ od breakpointu w górę
@@ -61,9 +69,21 @@
   overflow: hidden;
 }
 
+@mixin note {
+  padding: clamp(12px, 2.6vw, 16px);
+  border-radius: 16px; // lub radius(xl) jeśli masz taką funkcję
+  border: 1px solid $color-border;
+  background: color.change($white, $alpha: .06);
+  box-shadow: 0 12px 26px color.change($color-accent, $alpha: .08);
+}
+
 @mixin card {
   border: 1px solid $color-border;
-  border-radius: map.get($radii, lg);
-  background: rgba(255,255,255,.03);
-  box-shadow: map.get($shadows, md);
+  border-radius: 16px;
+  background: color.change($white, $alpha: .05);
+}
+
+@mixin focus-ring {
+  outline: 2px solid color.change($color-accent, $alpha: .6);
+  outline-offset: 2px;
 }
