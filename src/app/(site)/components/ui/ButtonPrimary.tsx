@@ -5,53 +5,62 @@ import Link from "next/link";
 import clsx from "clsx";
 import styles from "./ButtonPrimary.module.scss";
 
-type ButtonVariant = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  href?: undefined;
+type Common = {
+  children: React.ReactNode;
+  className?: string;
   ariaLabel?: string;
 };
 
-type AnchorVariant = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
-  href: string;
-  ariaLabel?: string;
-};
+type ButtonVariant = Common &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: never;
+  };
+
+type AnchorVariant = Common &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+    href: string;
+  };
 
 type Props = ButtonVariant | AnchorVariant;
 
-const ButtonPrimary = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>(
-  function ButtonPrimary(props, ref) {
-    const { children, className, ariaLabel } = props as Props;
-    const classes = clsx(styles.base, styles.primary, className);
+function isAnchorProps(p: Props): p is AnchorVariant {
+  return typeof (p as AnchorVariant).href === "string";
+}
 
-    // Link
-    if ("href" in props && typeof props.href === "string") {
-      const { href, ...rest } = props as AnchorVariant;
-      return (
-        <Link
-          href={href}
-          {...rest}
-          className={classes}
-          aria-label={ariaLabel}
-          ref={ref as React.Ref<HTMLAnchorElement>}
-        >
-          {children}
-        </Link>
-      );
-    }
+const ButtonPrimary = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  Props
+>(function ButtonPrimary(props, ref) {
+  const { children, className, ariaLabel } = props;
+  const classes = clsx(styles.base, styles.primary, className);
 
-    // Button
-    const { href: _href, type = "button", ...restBtn } = props as ButtonVariant;
+  if (isAnchorProps(props)) {
+    const { href, ...rest } = props;
     return (
-      <button
-        {...restBtn}
-        type={type}
+      <Link
+        href={href}
+        {...rest}
         className={classes}
         aria-label={ariaLabel}
-        ref={ref as React.Ref<HTMLButtonElement>}
+        ref={ref as React.Ref<HTMLAnchorElement>}
       >
         {children}
-      </button>
+      </Link>
     );
   }
-);
+
+  const { type = "button", ...restBtn } = props;
+  return (
+    <button
+      {...restBtn}
+      type={type}
+      className={classes}
+      aria-label={ariaLabel}
+      ref={ref as React.Ref<HTMLButtonElement>}
+    >
+      {children}
+    </button>
+  );
+});
 
 export default ButtonPrimary;
