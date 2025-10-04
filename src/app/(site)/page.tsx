@@ -4,6 +4,7 @@ import Services from "./components/Services/Services";
 import About from "./components//About/About";
 import Process from "./components/Process/Process";
 import Gallery  from "./components/Gallery/Gallery";
+import Contact from "./components/Contact/Contact";
 
 
 export default function Page() {
@@ -14,6 +15,7 @@ export default function Page() {
     <About />
     <Process />
      <Gallery />
+      <Contact />
     </>
   );
 }

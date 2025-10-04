@@ -81,8 +81,10 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.32, duration: 0.5 }}
         >
+        
           <ButtonPrimary href="#kontakt">Bezpłatna wycena</ButtonPrimary>
-          <ButtonSecondary href="#uslugi">Poznaj usługi</ButtonSecondary>
+          <ButtonSecondary href="#services">Poznaj usługi</ButtonSecondary>
+        
         </motion.div>
       </motion.div>
 

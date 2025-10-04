@@ -11,8 +11,8 @@ const items = [
   { href: "#about", label: "O NAS" },
   { href: "#proces", label: "PROCES" },
   { href: "#galeria", label: "GALERIA" },
+  { href: "#kontakt", label: "KONTAKT" },
   { href: "#opinion", label: "OPINIE" },
-  { href: "#contact", label: "KONTAKT" },
 ];
 
 export default function Navbar() {
