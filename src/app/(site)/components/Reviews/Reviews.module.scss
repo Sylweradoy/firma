@@ -1,0 +1,129 @@
+@use "sass:color";
+@use "sass:map";
+@use "styles/index" as *;
+
+/* Sekcja */
+.reviews { @include container; padding-block: clamp(40px, 8vw, 110px); display: grid; gap: clamp(24px, 4vw, 48px); }
+
+/* Header */
+.header { text-align: center; display: grid; gap: space(2); }
+.overline { font-size: clamp(12px, 1.4vw, 14px); letter-spacing: .16em; text-transform: uppercase; color: $color-muted; margin: 0; }
+.title {
+  margin: 0; font-family: $font-heading; font-weight: $weight-bold; line-height: 1.04; font-size: clamp(28px, 6.5vw, 56px);
+  span { color: $color-accent; text-shadow: 0 0 22px color.change($color-accent, $alpha: .35); }
+}
+.lead { margin: 0 auto; max-width: 78ch; opacity: .92; font-size: clamp(15px, 2.1vw, 18px); }
+
+/* Statystyki */
+.stats { display: grid; gap: 8px; justify-items: center; }
+.starsRow { display: inline-flex; gap: 4px; }
+.star { color: $color-accent; }
+.starEmpty { color: $black; opacity: .85; }
+.avg { font-size: 14px; color: $color-muted; em { font-style: normal; opacity: .95; } }
+
+/* Lista kart (skroll po ~5) */
+.list {
+  --row: 140px; --gap: 12px;
+  display: grid; gap: var(--gap);
+  max-height: calc(5 * var(--row) + 4 * var(--gap));
+  overflow-y: auto; padding-right: 6px;
+
+  &::-webkit-scrollbar { width: 8px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: color.change($white, $alpha: .12); border-radius: 999px; }
+}
+
+/* Karta */
+.card {
+  min-height: var(--row);
+  background: color.change($white, $alpha: .05);
+  border: 1px solid $color-border; border-radius: radius(xl);
+  padding: clamp(14px, 3vw, 20px);
+  display: grid; grid-template-rows: auto 1fr auto; gap: 10px;
+  transition: transform .18s ease, border-color .2s ease, background-color .2s ease;
+
+  &:hover { transform: translateY(-2px); background: color.change($white, $alpha: .07); border-color: color.change($color-accent, $alpha: .7); }
+}
+.rowTop { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cardStars { display: inline-flex; gap: 4px; .star { color: $color-accent; } .starEmpty { color: $black; opacity: .85; } }
+.date { font-size: 12px; color: $color-muted; }
+
+.text {
+  margin: 0; font-size: clamp(14px, 2.2vw, 16px); line-height: 1.55; color: $color-fg; opacity: .95;
+  line-clamp: 5; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.meta { display: inline-flex; align-items: center; gap: 8px; color: $color-muted; font-size: 13px; }
+.author { color: $color-fg; font-weight: $weight-semibold; }
+.actions { display: flex; justify-content: center; }
+
+/* === MODAL (portal + pewne pointer-events) === */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none; /* rodzic NIE łapie eventów */
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto; /* tło klikalne (zamyka) */
+  background: color.change(#000, $alpha: .64);
+  backdrop-filter: blur(2px);
+}
+
+.modalInner {
+  position: fixed;
+  z-index: 1; /* nad backdropem */
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(92vw, 720px);
+  max-height: 86vh; overflow: auto;
+  border-radius: radius(xl);
+  background: color.change($white, $alpha: .06);
+  border: 1px solid $color-border;
+  padding: clamp(16px, 3.2vw, 22px);
+  display: grid; gap: 14px;
+
+  pointer-events: auto; /* okno klikalne/edytowalne */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Rating */
+.rateRow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rateLabel { color: $color-muted; font-size: 14px; }
+.rateStars { display: inline-flex; gap: 6px; }
+.starBtnOn, .starBtnOff { background: transparent; border: 0; padding: 2px; cursor: pointer; line-height: 0; }
+.starBtnOn  { color: $color-accent; }
+.starBtnOff { color: $black; opacity: .85; }
+
+/* Formularz + honeypot (scoped/pure) */
+.form {
+  display: grid; gap: 10px;
+
+  label { font-size: 14px; color: $color-muted; }
+
+  :is(input, textarea):not(.hp) {
+    width: 100%; border-radius: radius(md);
+    border: 1px solid $color-border;
+    background: color.change($white, $alpha: .05);
+    color: $color-fg; padding: 10px 12px;
+  }
+
+  .hp {
+    position: absolute !important; left: -10000px !important; top: auto !important;
+    width: 1px !important; height: 1px !important; overflow: hidden !important;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+}
+.field, .fieldFull { display: grid; gap: 6px; }
+.fieldFull textarea { resize: vertical; }
+
+.modalActions { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+
+/* RWD */
+@media (max-width: 480px) {
+  .list { --row: 132px; --gap: 10px; }
+  .modalInner { width: 94vw; }
+}
