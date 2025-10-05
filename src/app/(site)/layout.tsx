@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from "next";
 import "./styles/site.scss";
 import Navbar from "./components/Navbar/Navbar";
 import ScrollTop from "./components/ScrollTop/ScrollTop";
+import SmoothScroll from "./components/Scroll/SmoothScroll";
+import ScrollProgress from "./components/Scroll/ScrollProgress";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
@@ -55,6 +57,8 @@ export default function SiteLayout({
     <html lang="pl">
       <body className={smoochSans.variable}>
         <Navbar />
+        <SmoothScroll />
+        <ScrollProgress />
         <main className="siteMain">{children}</main>
         <ScrollTop />
       </body>
