@@ -2,9 +2,7 @@
 @use "sass:color";
 
 
-/* Wspólna baza */
 .base {
-  /* Twoje ustawienia z fragmentu */
   font-family: inherit;
   box-sizing: border-box;
   display: inline-flex; align-items: center; justify-content: center;
@@ -16,40 +14,52 @@
   min-width: 0;
   border-radius: radius(md);
   position: relative;
-  transition: transform .12s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
-margin-right: 12px;
-  /* efekt obrysu */
-  --offx: -6px; --offy: 6px;
+  transition: transform .12s ease, background-color .18s ease, color .18s ease;
+  margin-right: 12px;
+
+  /* ⬇️ ważne, żeby pseudo-element mógł wejść pod spód */
+  isolation: isolate;
+
+  /* domyślne przesunięcie obramowania: w lewo i w dół */
+  --offx: -6px;  /* w lewo */
+  --offy:  6px;  /* w dół */
+
+  /* biała obwódka jako pseudo-element */
   &::after {
-    content: ""; position: absolute; inset: 0;
-    border: 1.5px solid $color-accent; border-radius: inherit;
-    transform: translate(var(--offx), var(--offy)); transition: transform .18s ease;
-    z-index: 1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid $white;   /* ⬅️ BIAŁY border */
+    border-radius: inherit;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform .18s ease, border-color .2s ease;
+    z-index: -1;                  /* pod przyciskiem */
   }
-  &:hover::after { transform: translate(0,0); }
-  &:active { transform: translateY(1px); }
+
+  /* po hoverze „schodzi” do 0 */
+  &:hover::after { transform: translate(0, 0); }
 }
 
-/* klasa wariantu (może zostać pusta) */
-
-
-/* ⬅️ KLUCZ: mocniejsza specyficzność */
 .base.primary {
   background: $color-accent;
   color: $white;
-
-
+  border: 0;
 
   &:hover {
-    background: $red;
-    color: $white;
-    border-color: $color-accent;
+    background: $white;
+    color: $color-accent;
   }
 }
 
-/* Dwa przyciski obok siebie na telefonach – globalny „compact” breakpoint */
-/* Mobile */
 @media (max-width: 420px) {
-  .base { padding: 10px 12px; font-size: 12px; border-radius: radius(sm);margin-right: 8px; }
- 
+  .base {
+    padding: 10px 12px;
+    font-size: 12px;
+    border-radius: radius(sm);
+    margin-right: 8px;
+
+    /* trochę mniejszy offset na bardzo małych ekranach */
+    --offx: -4px;
+    --offy:  4px;
+  }
 }

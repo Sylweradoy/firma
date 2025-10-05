@@ -191,6 +191,11 @@
   backdrop-filter: blur(2px);
   border: 0; padding: 0; margin: 0;
 }
+
+.card{
+ position: relative; 
+ left: -7%; 
+}
 .modalInner {
   position: relative;
   width: min(92vw, 720px);

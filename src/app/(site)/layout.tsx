@@ -8,9 +8,9 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
   : undefined;
 
-import { Gruppo } from "next/font/google";
-const gruppo = Gruppo({
-  weight: "400", // Gruppo ma jeden krój
+import { Smooch_Sans } from "next/font/google";
+const smoochSans = Smooch_Sans({
+  weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-gruppo",
   display: "swap",
@@ -53,7 +53,7 @@ export default function SiteLayout({
 }) {
   return (
     <html lang="pl">
-      <body className={gruppo.variable}>
+      <body className={smoochSans.variable}>
         <Navbar />
         <main className="siteMain">{children}</main>
         <ScrollTop />
