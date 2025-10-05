@@ -1,0 +1,143 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.footer {
+  /* pół ekranu + własna powierzchnia z kropkami */
+  min-height: 50vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+
+  color: $color-fg;
+
+  /* czarne tło z delikatnymi białymi kropkami */
+  background-color: #000;
+  background-image:
+    radial-gradient(circle, color.change($white, $alpha: .14) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+  background-position: 0 0;
+  background-repeat: repeat;
+
+  /* delikatna linia u góry, żeby odseparować od contentu */
+  border-top: 1px solid color.change($white, $alpha: .12);
+}
+
+.inner {
+  @include container;
+  padding-block: clamp(32px, 6vw, 72px);
+
+  display: grid;
+  gap: clamp(18px, 4vw, 40px);
+
+  /* 2 kolumny od md w górę */
+  @include mq(md) {
+    grid-template-columns: 1.3fr .7fr;
+    align-items: start;
+  }
+}
+
+.brand {
+  margin: 0 0 6px 0;
+  font-family: $font-brand;
+  font-weight: $weight-bold;
+  font-size: clamp(28px, 4.6vw, 40px);
+  letter-spacing: .02em;
+  color: $color-accent;
+}
+
+.address {
+  margin: 0 0 12px 0;
+  display: grid;
+  gap: 2px;
+  font-style: normal;
+  color: color.change($white, $alpha: .9);
+}
+
+.contact {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: $color-fg;
+    text-decoration: none;
+    padding: 8px 0;
+
+    svg { opacity: .9; }
+    &:hover { color: $color-accent; }
+  }
+}
+
+.socialLabel {
+  margin: 0 0 8px 0;
+  color: $color-muted;
+  font-size: 14px;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0; margin: 0;
+}
+
+.iconBtn {
+  --offx: -5px; --offy: 5px;
+
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: radius(md);
+  background: color.change($white, $alpha: .06);
+  border: 1px solid $color-border;
+  color: $color-fg;
+  text-decoration: none;
+  position: relative;
+  transition: transform .12s ease, background-color .18s ease, border-color .18s ease;
+
+  &::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    border: 1px solid $color-border;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform .18s ease, border-color .18s ease;
+  }
+
+  &:hover {
+    background: color.change($white, $alpha: .1);
+    border-color: color.change($color-accent, $alpha: .7);
+    &::after {
+      transform: translate(0,0);
+      border-color: color.change($color-accent, $alpha: .7);
+    }
+    color: $color-accent;
+  }
+}
+
+/* dół stopki */
+.bottom {
+  border-top: 1px solid color.change($white, $alpha: .12);
+  background: color.change(#000, $alpha: .85);
+}
+
+.copy {
+
+  margin: 0;
+  padding: 12px 0;
+  font-size: 13px;
+  color: $color-muted;
+  text-align: center;         /* ⬅️ wyśrodkowanie */
+}
+
+.madeLine {
+  margin-left: 8px;           /* delikatny odstęp od © */
+}
+
+.madeBrand {
+  color: $color-accent;        /* ⬅️ czerwony brand */
+  font-weight: $weight-bold;
+}

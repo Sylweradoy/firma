@@ -6,6 +6,7 @@ import Process from "./components/Process/Process";
 import Gallery  from "./components/Gallery/Gallery";
 import Contact from "./components/Contact/Contact";
 import Reviews from "./components/Reviews/Reviews";
+import Footer from "@/app/(site)/components/Footer/Footer";
 
 
 
@@ -20,6 +21,7 @@ export default function Page() {
      <Gallery />
       <Contact />
       <Reviews />
+      <Footer />
     </>
   );
 }
