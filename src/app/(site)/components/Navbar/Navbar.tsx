@@ -12,7 +12,7 @@ const items = [
   { href: "#proces", label: "PROCES" },
   { href: "#galeria", label: "GALERIA" },
   { href: "#kontakt", label: "KONTAKT" },
-  { href: "#opinion", label: "OPINIE" },
+  { href: "#opinie", label: "OPINIE" },
 ];
 
 export default function Navbar() {

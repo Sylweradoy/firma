@@ -126,4 +126,5 @@
 @media (max-width: 480px) {
   .list { --row: 132px; --gap: 10px; }
   .modalInner { width: 94vw; }
+  .list{position: relative;margin-left: -10%;}
 }
