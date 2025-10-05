@@ -35,13 +35,18 @@
 
 /* Kafelki kontaktowe */
 .cards {
-  --cols: 1;
+  /* mobile: 1 kolumna na pełną szerokość */
   display: grid;
-  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(12px, 3vw, 18px);
 
-  @include mq(sm) { --cols: 2; }
-  @include mq(md) { --cols: 4; }
+  /* od ~sm/ md przechodzimy na flexa i centrujemy wiersze */
+  @include mq(sm) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    /* ⬅️ centrowanie wierszy (w tym ostatniego) */
+    gap: clamp(12px, 3vw, 18px);
+  }
 }
 .card {
   @include card;
@@ -51,6 +56,12 @@
   background: color.change($white, $alpha: .05);
   border-color: $color-border;
   transition: transform .18s ease, border-color .2s ease, background-color .2s ease;
+
+  width: 100%;            /* mobile: pełna szerokość */
+  @include mq(sm) {
+    flex: 0 1 280px;      /* ⬅️ stała baza kafelka dla flexboxa */
+    max-width: 320px;     /* (opcjonalnie) ograniczenie, żeby nie rosły za szeroko */
+  }
 
   &:hover {
     transform: translateY(-3px);
