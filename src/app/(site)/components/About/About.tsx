@@ -129,7 +129,7 @@ export default function About() {
         </div>
         <div className={styles.dot} aria-hidden="true" />
         <div className={styles.pillAccent}>
-          <strong>3 lata</strong> razem jako Jel-Tomix
+          <strong>Od 2022</strong> razem jako Jel-Tomix
         </div>
       </motion.aside>
 
