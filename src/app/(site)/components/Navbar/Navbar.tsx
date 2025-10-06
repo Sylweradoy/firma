@@ -5,6 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./Navbar.module.scss";
+import LoginGuard from "../LoginGuard/LoginGuard";
+
+
+
 
 const items = [
   { href: "#services", label: "USŁUGI" },
@@ -20,6 +24,7 @@ export default function Navbar() {
 
   return (
     <div className={styles.navWrap}>
+   
       <nav className={styles.nav} aria-label="Główna nawigacja">
         <div className={styles.inner}>
           <Link
@@ -62,6 +67,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
+      <LoginGuard />
       </nav>
     </div>
   );

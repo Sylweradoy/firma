@@ -6,6 +6,8 @@ import ScrollTop from "./components/ScrollTop/ScrollTop";
 import SmoothScroll from "./components/Scroll/SmoothScroll";
 import ScrollProgress from "./components/Scroll/ScrollProgress";
 
+
+
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
   : undefined;
@@ -47,12 +49,13 @@ export const metadata: Metadata = {
 export function generateViewport(): Viewport {
   return { themeColor: "#2c2c2c" };
 }
-
-export default function SiteLayout({
+ 
+export default async function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="pl">
       <body className={smoochSans.variable}>

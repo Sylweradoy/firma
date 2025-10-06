@@ -1,4 +1,5 @@
 /* src/app/(site)/styles/site.scss */
+@use "sass:color";
 @use "styles/index" as *;
 
 :root { color-scheme: dark; }

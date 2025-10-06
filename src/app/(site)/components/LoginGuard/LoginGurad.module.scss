@@ -1,0 +1,46 @@
+@use "sass:color";
+@use "styles/index" as *;
+
+.loginBtn {
+  position: absolute;
+  padding: 5px 15px;
+  font-weight: $weight-bold;
+  font-size: 16px; line-height: 1;
+  background: $color-accent;
+  color: $color-muted;
+  border-radius: radius(sm);
+  text-decoration: none;
+  transition: transform 0.12s ease, background-color 0.18s ease,
+    color 0.18s ease;
+  isolation: isolate;
+  right: 5%;
+  top: 25%;
+
+  --offx: -6px; /* w lewo */
+  --offy: 6px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid $white; /* ⬅️ BIAŁY border */
+    border-radius: inherit;
+    transform: translate(var(--offx), var(--offy));
+    transition: transform 0.18s ease, border-color 0.2s ease;
+    z-index: -1; /* pod przyciskiem */
+  }
+
+  &:hover::after {
+    transform: translate(0, 0);
+  }
+  &:hover{
+    color: $color-accent;
+   background: $white;
+  }
+}
+
+@media (max-width: 420px){
+  .loginBtn {
+  right: 20%;
+  }
+}
