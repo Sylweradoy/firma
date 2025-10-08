@@ -1,0 +1,7 @@
+
+
+html, body { height: 100%; }
+body {
+  margin: 0;                 /* <-- usuwa białą ramkę */
+  background: #2c2c2c;       /* albo $color-bg, jeśli importujesz tokens */
+}

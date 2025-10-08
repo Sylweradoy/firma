@@ -18,16 +18,16 @@
 
 // ===== MEDIA QUERIES =====
 // ↑ od breakpointu w górę
-@mixin mq($from, $to: null) {
-  $min: map.get($breakpoints, $from);
-  @if $min == null { @error "Unknown breakpoint: #{$from}"; }
+@mixin mq($key, $mode: up) {
+  $bp: map.get($breakpoints, $key);
+  @if $bp == null { @error "Unknown breakpoint: #{$key}"; }
 
-  @if $to == null {
-    @media (min-width: $min) { @content; }
+  @if $mode == up {
+    @media (min-width: $bp) { @content; }
+  } @else if $mode == down {
+    @media (max-width: $bp) { @content; }
   } @else {
-    $max: map.get($breakpoints, $to);
-    @if $max == null { @error "Unknown breakpoint: #{$to}"; }
-    @media (min-width: $min) and (max-width: calc(#{$max} - 0.02px)) { @content; }
+    @error "Unknown mode: #{$mode}. Use up|down.";
   }
 }
 
