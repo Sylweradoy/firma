@@ -11,7 +11,7 @@ export default function LoginGuard() {
 
   useEffect(() => {
     let mounted = true;
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/ui/allowed`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/ui/allowed`;
     fetch(url, { credentials: "include" })
       .then(r => r.json())
       .then((d: AllowedResp) => { if (mounted) setVisible(!!d.allowed); })

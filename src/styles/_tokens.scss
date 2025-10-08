@@ -52,6 +52,13 @@ $breakpoints: (
   xl: 1280px
 );
 
+// letter-spacing
+$spacing :(
+  l: 0.5px,
+  m: 1px,
+  s: 1.5px,
+  xl: 2px
+);
 // === SPACING (skala odstępów) ===
 $space: (
   0: 0,
