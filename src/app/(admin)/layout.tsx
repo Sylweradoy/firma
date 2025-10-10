@@ -35,9 +35,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   ;
 
   return (
-   <div className={styles.shell}>
+     <div className={styles.shell}>
       <NavAdmin />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.content}>{children}</main>
     </div>
   );
 }

@@ -4,10 +4,10 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./NavAdmin.module.scss"
-import LogoutButton from "@/app/(admin)/components/LogoutButton"
+import styles from "./NavAdmin.module.scss";
+import LogoutButton from "@/app/(admin)/components/LogoutButton";
 
-/* Ikony (bez typowania zwrotki na JSX.Element – nie jest potrzebne) */
+/* Ikony */
 const IHome = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
     <path fill="currentColor" d="M12 3 2 12h3v8h6v-5h2v5h6v-8h3L12 3Z" />
@@ -34,21 +34,33 @@ const IMessages = () => (
   </svg>
 );
 
-/* UŻYWAMY ReactNode zamiast JSX.Element */
+/* Ikony toggle */
+const IMenu = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
+  </svg>
+);
+const IClose = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="m6 6 12 12M6 18 18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
 type NavItem = { href: string; label: string; icon: ReactNode; exact?: boolean };
 
 const NAV: NavItem[] = [
-  { href: "/admin",          label: "KOKPIT",  icon: <IHome />,     exact: true },
-  { href: "/admin/messages", label: "WiIADOMOSCI", icon: <IMessages /> },
-  { href: "/admin/gallery",  label: "GALERIA",    icon: <IGallery /> },
-  { href: "/admin/reviews",  label: "OPINIE",     icon: <IReviews /> },
-  { href: "/admin/settings", label: "USTAWIENIA", icon: <ISettings /> },
+  { href: "/admin",           label: "KOKPIT",      icon: <IHome />,     exact: true },
+  { href: "/admin/messages",  label: "WIADOMOŚCI",  icon: <IMessages /> },
+  { href: "/admin/gallery",   label: "GALERIA",     icon: <IGallery /> },
+  { href: "/admin/reviews",   label: "OPINIE",      icon: <IReviews /> },
+  { href: "/admin/settings",  label: "USTAWIENIA",  icon: <ISettings /> },
 ];
 
-export default function AdminNav() {
+export default function NavAdmin() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // zamknij menu po zmianie trasy
   useEffect(() => { setOpen(false); }, [pathname]);
 
   const isActive = (item: NavItem) =>
@@ -56,34 +68,52 @@ export default function AdminNav() {
 
   return (
     <>
+      {/* Toggle: jeden przycisk → hamburger/krzyżyk */}
       <button
-        className={styles.burger}
-        aria-label="Otwórz menu"
-        aria-controls="admin-sidebar"
+        type="button"
+        className={styles.toggle}
+        aria-label={open ? "Zamknij nawigację" : "Otwórz nawigację"}
+        aria-controls="adminSidebar"
         aria-expanded={open}
-        onClick={() => setOpen(true)}
+        data-open={open ? "true" : "false"}
+        onClick={() => setOpen(v => !v)}
       >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
+        <span className={styles.iconOpen} aria-hidden={open}>
+          <IMenu />
+        </span>
+        <span className={styles.iconClose} aria-hidden={!open}>
+          <IClose />
+        </span>
       </button>
 
-      <div
-        className={`${styles.overlay} ${open ? styles.show : ""}`}
-        onClick={() => setOpen(false)}
-        aria-hidden={!open}
-      />
+      {/* Backdrop (tylko mobile) */}
+      {open && (
+        <button
+          className={styles.backdrop}
+          onClick={() => setOpen(false)}
+          aria-label="Zamknij nawigację"
+        />
+      )}
 
       <aside
-        id="admin-sidebar"
-        className={`${styles.sidebar} ${open ? styles.open : ""}`}
+        id="adminSidebar"
+        className={`${styles.sidebar} ${open ? styles.isOpen : ""}`}
         aria-label="Nawigacja panelu"
       >
         <div className={styles.head}>
           <Link href="/admin" className={styles.brand} aria-label="Panel główny">
             <img src="/logo.svg" alt="" width={120} height={28} />
           </Link>
-          <button className={styles.close} onClick={() => setOpen(false)} aria-label="Zamknij menu">✕</button>
+
+          {/* Krzyżyk tylko na mobile */}
+          <button
+            type="button"
+            className={styles.close}
+            onClick={() => setOpen(false)}
+            aria-label="Zamknij nawigację"
+          >
+            ✕
+          </button>
         </div>
 
         <nav className={styles.nav}>
