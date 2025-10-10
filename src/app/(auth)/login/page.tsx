@@ -9,12 +9,12 @@ import styles from "./Login.module.scss";
 
 export default function LoginPage() {
   const router = useRouter();
-  const API   = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
+  const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
   const AFTER = process.env.NEXT_PUBLIC_AFTER_LOGIN ?? "/admin";
 
   const [submitting, setSubmitting] = useState(false);
-  const [err, setErr]               = useState<string | null>(null);
-  const [csrf, setCsrf]             = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [csrf, setCsrf] = useState<string | null>(null);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
 
@@ -22,7 +22,10 @@ export default function LoginPage() {
   useEffect(() => {
     (async () => {
       try {
-        const r = await fetch(`${API}/csrf`, { credentials: "include", cache: "no-store" });
+        const r = await fetch(`${API}/csrf`, {
+          credentials: "include",
+          cache: "no-store",
+        });
         if (!r.ok) return; // jeśli nie masz CSRF włączonego - po prostu pomiń
         const { token } = await r.json();
         if (token) setCsrf(token);
@@ -54,7 +57,10 @@ export default function LoginPage() {
       let token = csrf;
       if (!token) {
         try {
-          const r = await fetch(`${API}/csrf`, { credentials: "include", cache: "no-store" });
+          const r = await fetch(`${API}/csrf`, {
+            credentials: "include",
+            cache: "no-store",
+          });
           const data = await r.json().catch(() => ({}));
           if (data?.token) token = data.token;
           setCsrf(token ?? null);
@@ -73,16 +79,17 @@ export default function LoginPage() {
       });
 
       if (!res.ok) {
-        let message = "Nie udało się zalogować. Sprawdź dane i spróbuj ponownie.";
+        let message =
+          "Nie udało się zalogować. Sprawdź dane i spróbuj ponownie.";
         try {
           const data = await res.json();
           if (data?.message) message = data.message;
         } catch {}
         throw new Error(message);
       }
-
+      sessionStorage.setItem("justLoggedIn", "1");
       // Sukces → do panelu
-      router.replace(AFTER);
+     router.replace(`${AFTER}?welcome=1`);
     } catch (e: unknown) {
       setErr(e instanceof Error ? e.message : "Błąd logowania.");
     } finally {
@@ -109,7 +116,9 @@ export default function LoginPage() {
           <h1 id="login-title" className={styles.title}>
             Zaloguj się: <span>Panel Admina</span>
           </h1>
-          <p className={styles.lead}>Dostęp tylko dla uprawnionych użytkowników.</p>
+          <p className={styles.lead}>
+            Dostęp tylko dla uprawnionych użytkowników.
+          </p>
 
           {err && (
             <p className={styles.error} role="alert" aria-live="assertive">
@@ -154,7 +163,11 @@ export default function LoginPage() {
                 {submitting ? "Logowanie…" : "Zaloguj"}
               </button>
 
-              <Link href="/" className={`${styles.btn} ${styles.secondary}`} aria-disabled={submitting}>
+              <Link
+                href="/"
+                className={`${styles.btn} ${styles.secondary}`}
+                aria-disabled={submitting}
+              >
                 Wróć
               </Link>
             </div>

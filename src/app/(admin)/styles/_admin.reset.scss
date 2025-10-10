@@ -1,0 +1,14 @@
+@use "../styles/_tokensAdmin" as *;
+
+/* Tylko dla przestrzeni (admin) – importuj w (admin)/layout.tsx */
+:root, html, body {
+  margin: 0;
+  padding: 0;
+  background: t(bg);    /* ciemne tło panelu */
+  color: t(text);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* żadnych globalnych ramek/obrysów na body */
+body { border: 0; outline: none; }
